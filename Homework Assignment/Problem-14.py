@@ -1,27 +1,22 @@
-arr = [1, 3, 5, 8, 9, 2, 6, 7, 6, 8, 9]
+def findDuplicate(nums):
+    slow = nums[0]
+    fast = nums[0]
 
-n = len(arr)
-
-if n <= 1:
-    print(0)
-elif arr[0] == 0:
-    print(-1)
-else:
-    maxReach = arr[0]
-    steps = arr[0]
-    jumps = 1
-
-    for i in range(1, n):
-        if i == n - 1:
-            print(jumps)
+    while True:
+        slow = nums[slow]
+        fast = nums[nums[fast]]
+        if slow == fast:
             break
 
-        maxReach = max(maxReach, i + arr[i])
-        steps -= 1
+    slow = nums[0]
 
-        if steps == 0:
-            jumps += 1
-            if i >= maxReach:
-                print(-1)
-                break
-            steps = maxReach - i
+    while slow != fast:
+        slow = nums[slow]
+        fast = nums[fast]
+
+    return slow
+
+
+print(findDuplicate([1,3,4,2,2]))
+print(findDuplicate([3,1,3,4,2]))
+print(findDuplicate([3,3,3,3,3]))
