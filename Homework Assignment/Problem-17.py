@@ -1,13 +1,20 @@
-intervals = [[1,3],[2,6],[8,10],[15,18]]
+def factorial(n):
+    result = [1]
 
-intervals.sort()
+    for num in range(2, n + 1):
+        carry = 0
+        for i in range(len(result)):
+            product = result[i] * num + carry
+            result[i] = product % 10
+            carry = product // 10
 
-merged = []
+        while carry:
+            result.append(carry % 10)
+            carry //= 10
 
-for interval in intervals:
-    if not merged or merged[-1][1] < interval[0]:
-        merged.append(interval)
-    else:
-        merged[-1][1] = max(merged[-1][1], interval[1])
+    return result[::-1]
 
-print(merged)
+
+print(factorial(5))
+print(factorial(10))
+
