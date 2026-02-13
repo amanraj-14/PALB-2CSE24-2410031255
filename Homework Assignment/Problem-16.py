@@ -1,32 +1,26 @@
-a = [1, 5, 9, 10, 15, 20]
-b = [2, 3, 8, 13]
+def mergeIntervals(intervals):
+    if not intervals:
+        return []
 
-n = len(a)
-m = len(b)
+    # Step 1: Sort intervals by start time
+    intervals.sort(key=lambda x: x[0])
 
-gap = (n + m + 1) // 2
+    merged = []
+    merged.append(intervals[0])
 
-while gap > 0:
-    i = 0
-    j = gap
+    # Step 2: Merge overlapping intervals
+    for i in range(1, len(intervals)):
+        last = merged[-1]
+        current = intervals[i]
 
-    while j < n + m:
-        if i < n and j < n:
-            if a[i] > a[j]:
-                a[i], a[j] = a[j], a[i]
-        elif i < n and j >= n:
-            if a[i] > b[j - n]:
-                a[i], b[j - n] = b[j - n], a[i]
+        # Check overlap
+        if current[0] <= last[1]:
+            last[1] = max(last[1], current[1])
         else:
-            if b[i - n] > b[j - n]:
-                b[i - n], b[j - n] = b[j - n], b[i - n]
-        i += 1
-        j += 1
+            merged.append(current)
 
-    if gap == 1:
-        gap = 0
-    else:
-        gap = (gap + 1) // 2
+    return merged
 
-print("a[] =", a)
-print("b[] =", b)
+
+intervals = [[1,3],[2,6],[8,10],[15,18]]
+print(mergeIntervals(intervals))
