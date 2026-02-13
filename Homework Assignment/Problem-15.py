@@ -1,18 +1,48 @@
-nums = [1, 3, 4, 2, 2]
+def nextGap(gap):
+    if gap <= 1:
+        return 0
+    return (gap // 2) + (gap % 2)
 
-slow = nums[0]
-fast = nums[0]
+def merge(a, b):
+    n = len(a)
+    m = len(b)
+    gap = nextGap(n + m)
 
-while True:
-    slow = nums[slow]
-    fast = nums[nums[fast]]
-    if slow == fast:
-        break
+    while gap > 0:
+        i = 0
+        while i + gap < n:
+            if a[i] > a[i + gap]:
+                a[i], a[i + gap] = a[i + gap], a[i]
+            i += 1
 
-slow = nums[0]
+        j = gap - n if gap > n else 0
+        while i < n and j < m:
+            if a[i] > b[j]:
+                a[i], b[j] = b[j], a[i]
+            i += 1
+            j += 1
 
-while slow != fast:
-    slow = nums[slow]
-    fast = nums[fast]
+        if j < m:
+            j = 0
+            while j + gap < m:
+                if b[j] > b[j + gap]:
+                    b[j], b[j + gap] = b[j + gap], b[j]
+                j += 1
 
-print(slow)
+        gap = nextGap(gap)
+
+
+a = [2, 4, 7, 10]
+b = [2, 3]
+merge(a, b)
+print(a, b)
+
+a = [1, 5, 9, 10, 15, 20]
+b = [2, 3, 8, 13]
+merge(a, b)
+print(a, b)
+
+a = [0, 1]
+b = [2, 3]
+merge(a, b)
+print(a, b)
