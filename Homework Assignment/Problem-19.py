@@ -1,35 +1,24 @@
-arr1 = [1, 1, 1, 2, 2, 2]
-arr2 = [1, 1, 2, 2, 2]
-arr3 = [1, 1, 1, 1, 2, 2, 2, 2]
+def tripletSum(arr, target):
+    arr.sort()
+    n = len(arr)
 
-i = j = k = 0
-n1 = len(arr1)
-n2 = len(arr2)
-n3 = len(arr3)
+    for i in range(n - 2):
+        left = i + 1
+        right = n - 1
 
-ans = []
+        while left < right:
+            total = arr[i] + arr[left] + arr[right]
 
-while i < n1 and j < n2 and k < n3:
-    if arr1[i] == arr2[j] == arr3[k]:
-        if not ans or ans[-1] != arr1[i]:
-            ans.append(arr1[i])
-        val = arr1[i]
-        while i < n1 and arr1[i] == val:
-            i += 1
-        while j < n2 and arr2[j] == val:
-            j += 1
-        while k < n3 and arr3[k] == val:
-            k += 1
-    else:
-        minimum = min(arr1[i], arr2[j], arr3[k])
-        if arr1[i] == minimum:
-            i += 1
-        elif arr2[j] == minimum:
-            j += 1
-        else:
-            k += 1
+            if total == target:
+                return True
+            elif total < target:
+                left += 1
+            else:
+                right -= 1
 
-if ans:
-    print(ans)
-else:
-    print([-1])
+    return False
+
+
+print(tripletSum([1, 4, 45, 6, 10, 8], 13))
+print(tripletSum([1, 2, 4, 3, 6, 7], 10))
+print(tripletSum([40, 20, 10, 3, 6, 7], 24))
